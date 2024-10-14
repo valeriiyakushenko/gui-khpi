@@ -66,7 +66,7 @@ Widget::Widget(QWidget *parent)
     connect(rb3, &QRadioButton::toggled, this, &Widget::changeType);
     connect(convert, &QPushButton::clicked, this, &Widget::convertUnits);
     connect(invert, &QCheckBox::stateChanged, this, &Widget::invertUpdate);
-    connect(textSize, QOverload<int>::of(&QSpinBox::valueChanged), this, &Widget::textSizeUpdate);
+    connect(textSize, &QSpinBox::valueChanged, this, &Widget::textSizeUpdate);
 
 }
 
