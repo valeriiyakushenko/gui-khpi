@@ -1,1 +1,1 @@
-# gui-khpi
+## GUI Programming KhPI
