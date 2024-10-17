@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     fontSizeSpinBox = new QSpinBox();
     fontSizeSpinBox->setRange(8, 36);
-    fontSizeSpinBox->setValue(12);
+    fontSizeSpinBox->setValue(9);
     fontSizeSpinBox->setFixedWidth(120);
     connect(fontSizeSpinBox, &QSpinBox::valueChanged, this, &MainWindow::changeFontSize);
     tools->addWidget(fontSizeSpinBox);
@@ -90,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(centralWidget);
 
     centralLayout = new QVBoxLayout(centralWidget);
-    fileLabel = new QLabel("Open File: No file opened", this);
+    fileLabel = new QLabel("New file", this);
     centralLayout->addWidget(fileLabel);
 
     textEdit = new QTextEdit(this);
@@ -98,7 +98,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     fileDock = new QDockWidget("File Commands", this);
     fileDockContents = new QWidget(this);
-    fileLayout = new QGridLayout(fileDockContents);
+    fileDock->setAllowedAreas(Qt::LeftDockWidgetArea);
+    fileDock->setFixedWidth(200);
+    fileLayout = new QVBoxLayout(fileDockContents);
 
     fileNewButton = new QPushButton(fileNew->text());
     fileOpenButton = new QPushButton(fileOpen->text());
@@ -107,11 +109,11 @@ MainWindow::MainWindow(QWidget *parent)
     fileSaveAsButton = new QPushButton(fileSaveAs->text());
     fileQuitButton = new QPushButton(fileQuit->text());
 
-    fileLayout->addWidget(fileNewButton, 0, 0);
-    fileLayout->addWidget(fileOpenButton, 0, 1);
-    fileLayout->addWidget(fileSaveButton, 1, 0);
-    fileLayout->addWidget(fileSaveAsButton, 1, 1);
-    fileLayout->addWidget(fileQuitButton, 2, 0, 1, 2);
+    fileLayout->addWidget(fileNewButton);
+    fileLayout->addWidget(fileOpenButton);
+    fileLayout->addWidget(fileSaveButton);
+    fileLayout->addWidget(fileSaveAsButton);
+    fileLayout->addWidget(fileQuitButton);
 
     fileDockContents->setLayout(fileLayout);
     fileDock->setWidget(fileDockContents);
@@ -119,6 +121,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     editDock = new QDockWidget("Edit Commands", this);
     editDockContents = new QWidget(this);
+    editDock->setAllowedAreas(Qt::BottomDockWidgetArea);
+    editDock->setFixedHeight(100);
     editLayout = new QGridLayout(editDockContents);
 
     editClearButton = new QPushButton(editClear->text());
@@ -200,11 +204,11 @@ void MainWindow::onTextChanged() {
 
 void MainWindow::newFile() {
     textEdit->clear();
-    fileLabel->setText("Open File: No file opened");
+    fileLabel->setText("New file");
     currentFile.clear();
     fileSave->setEnabled(false);
     fileSaveButton->setEnabled(false);
-    showTemporaryMessage("New file created!");
+    showTemporaryMessage("New file created!", 2000);
 }
 
 void MainWindow::openFile() {
@@ -219,7 +223,7 @@ void MainWindow::openFile() {
         currentFile = fileName;
         fileSave->setEnabled(true);
         fileSaveButton->setEnabled(true);
-        showTemporaryMessage("File opened!");
+        showTemporaryMessage("File opened!", 2000);
     }
 }
 
@@ -229,12 +233,12 @@ void MainWindow::saveFile() {
         QTextStream out(&file);
         out << textEdit->toPlainText();
         fileLabel->setText("Open File: " + currentFile);
-        showTemporaryMessage("File saved!");
+        showTemporaryMessage("File saved!", 2000);
     }
 }
 
 void MainWindow::saveFileAs() {
-    QString fileName = QFileDialog::getSaveFileName(this, "Save File", QString(), "Text Files (*.txt);;All Files (*)");
+    QString fileName = QFileDialog::getSaveFileName(this, "Save File", "New file", "Text Files (*.txt);;All Files (*)");
     currentFile = fileName;
     saveFile();
 }

@@ -44,7 +44,7 @@ private slots:
     void increaseFontSize();
     void decreaseFontSize();
     void eachWordOnNewLine();
-    void showTemporaryMessage(const QString &message, int timeout = 2000);
+    void showTemporaryMessage(const QString &message, int timeout);
     void showNormalMessage(const QString &message);
     void showPermanentMessage(const QString &message);
 
@@ -61,9 +61,9 @@ private:
     QLabel *fileLabel;
     QTextEdit *textEdit;
     QWidget *centralWidget, *fileDockContents, *editDockContents;
-    QVBoxLayout *centralLayout;
+    QVBoxLayout *centralLayout, *fileLayout;
     QDockWidget *fileDock, *editDock;
-    QGridLayout *fileLayout, *editLayout;
+    QGridLayout *editLayout;
     QString currentFile;
     QStatusBar *statusBar;
     QPushButton *editClearButton, *editToUpperButton, *editToLowerButton, *editIncreaseFontButton, *editDecreaseFontButton, *editNewLineWordButton;
