@@ -200,6 +200,7 @@ void MainWindow::onTextChanged() {
     if (!currentFile.isEmpty()) {
         fileLabel->setText("Open File: " + currentFile + " *");
     }
+    showNormalMessage("Changes not saved!");
 }
 
 void MainWindow::newFile() {
@@ -240,6 +241,8 @@ void MainWindow::saveFile() {
 void MainWindow::saveFileAs() {
     QString fileName = QFileDialog::getSaveFileName(this, "Save File", "New file", "Text Files (*.txt);;All Files (*)");
     currentFile = fileName;
+    fileSave->setEnabled(true);
+    fileSaveButton->setEnabled(true);
     saveFile();
 }
 
